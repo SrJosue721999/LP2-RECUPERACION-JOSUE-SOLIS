@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <title>Comprar vuelos</title>
+    
+    <style>
+        /* Add custom styles here if needed */
+        body {
+            background-color: #808080; /* Set the background color to gray */
+        }
+
+        /* Style for form background and borders */
+        form {
+            background-color: #d3d3d3; /* Light gray background for the form */
+            border: 2px solid #000; /* Black border for the form */
+            padding: 15px; /* Add padding for better visual appeal */
+            transition: background-color 0.3s ease; /* Smooth transition for background color change */
+        }
+
+        /* Hover effect for the form */
+        form:hover {
+            background-color: #c0c0c0; /* Darker gray background on hover */
+        }
+
+        /* Style for table backgrounds */
+        table {
+            background-color: #f8f9fa; /* Light gray background for tables */
+        }
+
+        /* Style for the second table with a different background */
+        .table-bordered-custom {
+            background-color: #d3d3d3; /* Light gray background for the second table */
+        }
+    </style>
+    
+    
+</head>
+<body>
+<div class="container mt-5">
+    <form th:action="@{/agregar-boleto}" th:object="${boleto}" method="post">
+    <table class="table table-bordered border-primary">
+            <tr>
+                <td colspan="2" align="center" class="bg-primary text-white">vivaair.com</td>
+                <td colspan="2" align="center" style="background-color:#ccc;">VENTA DE BOLETOS</td>
+            </tr>
+
+    <tr>
+        <td>Ciudad Origen</td>
+        <td>
+            <select th:field="*{ciudadOrigen}">
+                <option th:each="ciudad : ${ciudades}" th:value="${ciudad.codigoPostal}" th:text="${ciudad.nombre}"></option>
+            </select>
+        </td>
+        <td>Ciudad Destino</td>
+        <td>
+            <select th:field="*{ciudadDestino}">
+                <option th:each="ciudad : ${ciudades}" th:value="${ciudad.codigoPostal}" th:text="${ciudad.nombre}"></option>
+            </select>
+        </td>
+    </tr>
+    <tr>
+        <td>Fecha Salida</td>
+        <td><input th:field="*{fechaSalida}" type="text"></td>
+        <td>Fecha Retorno</td>
+        <td><input th:field="*{fechaRetorno}" type="text"></td>
+    </tr>
+    <tr>
+        <td>Nombre Comprador</td>
+        <td><input th:field="*{nombreComprador}" type="text"></td>
+        <td>Cantidad</td>
+        <td><input th:field="*{cantidad}" type="text"></td>
+    </tr>
+    <tr>
+        <td colspan="4">&nbsp;</td>
+    </tr>
+    <tr style="background-color:#ccc;">
+        <td align="center"><button type="submit" role="button" class="btn btn-primary btn-lg">Agregar</button></td>
+        <td colspan="2"></td>
+        <td align="center"><a type="button" role="button" class="btn btn-primary btn-lg" th:href="@{/limpiar}">Limpiar</a></td>
+    </tr>
+</table>
+</form>
+
+<table class="table table-bordered border-primary mt-4">
+
+    <tr>
+        <td colspan="4">&nbsp;</td>
+    </tr>
+    <tr>
+        <td colspan="4">
+            <table border="1" align="center" width="100%" class="table table-bordered border-primary">
+                <tr bgcolor="black" style="color:white;">
+                    <td>Ciudad Origen</td>
+                    <td>Ciudad Destino</td>
+                    <td>Fecha Salida</td>
+                    <td>Fecha Retorno</td>
+                    <td>Comprador</td>
+                    <td>Cantidad</td>
+                    <td>Sub-Total</td>
+                </tr>
+                <tr th:each="boletoAgregado : ${boletosAgregados}">
+                    <td th:text="${boletoAgregado.ciudadOrigen}">&nbsp;</td>
+                    <td th:text="${boletoAgregado.ciudadDestino}">&nbsp;</td>
+                    <td th:text="${boletoAgregado.fechaSalida}">&nbsp;</td>
+                    <td th:text="${boletoAgregado.fechaRetorno}">&nbsp;</td>
+                    <td th:text="${boletoAgregado.nombreComprador}">&nbsp;</td>
+                    <td th:text="${boletoAgregado.cantidad}">&nbsp;</td>
+                    <td th:text="${boletoAgregado.subTotal}">&nbsp;</td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="4">&nbsp;</td>
+    </tr>
+    <tr style="background-color:#ccc;">
+        <td colspan="4" align="center">
+             <a class="btn btn-danger btn-lg" th:href="@{/index}">Comprar</a>
+        </td>
+    </tr>
+</table>
+</div>
+</body>
+</html>
